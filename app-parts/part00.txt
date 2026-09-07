@@ -1,0 +1,75 @@
+(() => {
+  'use strict';
+
+  const STORAGE_KEY = 'stp-y9-transport-revision-v1';
+  const THEME_KEY = 'stp-y9-transport-theme';
+
+  const media = {
+    blood: 'https://bam.files.bbci.co.uk/bam/live/content/z62qqhv/small',
+    vessels: 'https://bam.files.bbci.co.uk/bam/live/content/zp6cxfr/small',
+    heart: 'https://ichef.bbci.co.uk/images/ic/480xn/p0kzc2dz.png',
+    circulation: 'https://bam.files.bbci.co.uk/bam/live/content/z38d96f/small',
+    alveolus: 'https://bam.files.bbci.co.uk/bam/live/content/znsncxs/small',
+    alveoli: 'https://bam.files.bbci.co.uk/bam/live/content/ztv7fg8/small',
+    osmosisStart: 'https://ichef.bbci.co.uk/images/ic/480x270/p0kz48pq.png',
+    osmosisMove: 'https://ichef.bbci.co.uk/images/ic/480x270/p0kz490x.png',
+    osmosisCells: 'https://ichef.bbci.co.uk/images/ic/480xn/p0kz4cjq.png',
+    osmosisPractical: 'https://ichef.bbci.co.uk/images/ic/480xn/p0l0g1kb.png',
+    activeGut: 'https://bam.files.bbci.co.uk/bam/live/content/zyn6y4j/small'
+  };
+
+  const bbc = {
+    circulation: 'https://www.bbc.co.uk/bitesize/topics/z7chh39/articles/zqbhjfr',
+    ks3circulation: 'https://www.bbc.co.uk/bitesize/topics/zvrrd2p/articles/zkq7wnb',
+    diffusion: 'https://www.bbc.co.uk/bitesize/guides/ztrgng8/revision/1',
+    osmosis: 'https://www.bbc.co.uk/bitesize/topics/z7chh39/articles/zy8v6rd',
+    active: 'https://www.bbc.co.uk/bitesize/guides/ztrgng8/revision/7'
+  };
+
+  const video = (id, title, channel, note) => `
+    <div class="video-card">
+      <div class="video-head"><strong>${title}</strong><span>${channel} • GCSE Science</span></div>
+      <iframe class="video-frame" loading="lazy" src="https://www.youtube-nocookie.com/embed/${id}" title="${title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <p class="video-note">${note}</p>
+    </div>`;
+
+  const figure = (src, alt, title, caption) => `
+    <figure class="support-visual">
+      <img loading="lazy" src="${src}" alt="${alt}">
+      <figcaption><strong>${title}</strong><span>${caption}</span></figcaption>
+    </figure>`;
+
+  const sourceBox = (href, label='BBC Bitesize') => `
+    <div class="source-box"><strong>BBC Bitesize visual / reinforcement</strong><a href="${href}" target="_blank" rel="noopener">Open ${label}</a></div>`;
+
+  const modules = {
+    blood: {
+      number:'01', name:'System Tour & Blood', short:'Blood', icon:'🩸', colour:'#c84d62', soft:'#fff0f3', subtitle:'What blood carries and what it is made of',
+      intro:'Start with the transport system as a whole, then learn how each blood component contributes to moving substances around the body.',
+      vocab:['circulatory system','plasma','red blood cell','white blood cell','platelet','haemoglobin','hormone','urea'],
+      lessons:[
+        {title:'The human transport system', body:()=>`
+          <h3>A connected transport system</h3>
+          <p>The human transport system has three main parts: the <strong>heart</strong>, <strong>blood vessels</strong> and <strong>blood</strong>. Together they move useful substances to cells and carry waste products away.</p>
+          <div class="concept-grid">
+            <div class="concept"><strong>Heart</strong><p>A muscular pump that keeps blood moving.</p></div>
+            <div class="concept"><strong>Blood vessels</strong><p>Tubes that carry blood around the body.</p></div>
+            <div class="concept"><strong>Blood</strong><p>A tissue containing plasma, cells and platelets.</p></div>
+          </div>
+          <h3>What does blood transport?</h3>
+          <table class="mini-table"><thead><tr><th>Substance</th><th>Why it must be transported</th></tr></thead><tbody>
+            <tr><td>Oxygen</td><td>From the lungs to body cells for respiration.</td></tr>
+            <tr><td>Glucose and other nutrients</td><td>From the small intestine to cells.</td></tr>
+            <tr><td>Hormones</td><td>Chemical signals carried from glands to target organs.</td></tr>
+            <tr><td>Carbon dioxide</td><td>A waste product carried from cells to the lungs.</td></tr>
+            <tr><td>Urea</td><td>A waste product carried in the blood for removal from the body.</td></tr>
+          </tbody></table>
+          <div class="worked"><strong>Aotearoa context</strong><p>The NZ Blood Service separates donated blood into components such as red blood cells, plasma and platelets so different patients can receive the component they need.</p></div><div class="assessment-box"><strong>Extended-writing link</strong><p>Do not list body parts separately. Explain the route: where a substance enters the blood, what carries it, how the heart moves it and where it leaves the blood.</p></div>
+        `},
+        {title:'Components of blood', body:()=>`
+          <div class="support-visual-grid">
+            ${figure(media.blood,'BBC Bitesize diagram showing plasma, red blood cells, white blood cells and platelets','The components of blood','BBC Bitesize GCSE Science')}
+          </div>
+          <table class="mini-table"><thead><tr><th>Component</th><th>Main job</th><th>Useful detail</th></tr></thead><tbody>
+            <tr><td><strong>Plasma</strong></td><td>Transports dissolved substances.</td><td>Carries glucose, hormones, carbon dioxide and urea, as well as the blood cells.</td></tr>
+            <tr><td><strong>Red blood cells</strong></td><td>Transport oxygen.</td><td>Contain <strong>haemoglobin</strong>, which binds to oxygen.</td></tr>
