@@ -20,8 +20,9 @@
     const m=modules[activeModule], qs=questions[activeModule], written=window.writtenQuestions?.[activeModule]||[];
     panel.style.setProperty('--accent',m.colour);
     const score=qs.filter((_,i)=>state.correct?.[`${activeModule}-${i}`]).length;
+    const writtenDone=written.filter((_,i)=>state.writtenChecked?.[`${activeModule}-written-${i}`]).length;
     panel.innerHTML=`
-      <div class="quiz-head"><div><p class="section-kicker">Practice Questions • ${m.name}</p><h2>Practise this section</h2><p class="lead">Start with the multiple-choice questions, then write your own answers to the short-answer questions. Use the model answer only after you have attempted each one.</p></div><div class="score-pill">MCQ mastered ${score}/${qs.length}</div></div>
+      <div class="quiz-head"><div><p class="section-kicker">Practice Questions • ${m.name}</p><h2>Multiple-choice + written practice</h2><p class="lead">Every course section has both question types. Complete the multiple-choice questions, then write your own answers to the short-answer questions before checking the key ideas and model answer.</p></div><div class="score-pill">MCQ ${score}/${qs.length} • Written ${writtenDone}/${written.length}</div></div>
       <h3>Multiple-choice practice</h3>
       ${qs.map((q,i)=>renderQuestion(q,i)).join('')}
       <h3 style="margin-top:28px">Written practice</h3>
@@ -100,5 +101,6 @@
     state.writtenChecked[key]=true;
     saveState();
     target.innerHTML=writtenFeedback(window.writtenQuestions[activeModule][i]);
+    renderChrome();
   }
 
