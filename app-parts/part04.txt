@@ -1,0 +1,75 @@
+      {q:'Why does a thin exchange surface make diffusion faster?', options:['It creates more energy','It shortens the diffusion distance','It makes particles larger','It stops the concentration gradient'], a:1, explain:'A shorter distance means particles can cross the surface more quickly.'},
+      {q:'How does blood flow help maintain efficient gas exchange at alveoli?', options:['It removes oxygenated blood and brings deoxygenated blood, maintaining gradients','It stops diffusion','It thickens the surface','It makes alveoli smaller'], a:0, explain:'Continuous blood flow helps keep concentration differences between air and blood.'},
+      {q:'What usually makes an exchange surface more efficient?', options:['Low surface area : volume ratio','Thicker walls','High surface area : volume ratio','No concentration gradient'], a:2, explain:'A high surface area relative to volume provides more area for exchange.'}
+    ],
+    osmosis:[
+      {q:'Which substance moves by osmosis?', options:['Water','Glucose','Salt ions','Oxygen'], a:0, explain:'Osmosis describes the net movement of water only.'},
+      {q:'Water moves by osmosis from…', options:['low water concentration to high water concentration','high water concentration to low water concentration','high solute concentration to low solute concentration only','low pressure to high pressure'], a:1, explain:'Water moves from high water concentration (dilute) to low water concentration (more concentrated) across a semi-permeable membrane.'},
+      {q:'A cell is placed in a hypertonic solution. What is the likely net movement of water?', options:['Into the cell','Out of the cell','No water moves at all','Water changes into solute'], a:1, explain:'A hypertonic solution is more concentrated, so its water concentration is lower and water tends to move out of the cell.'},
+      {q:'In a potato osmosis practical, what is a suitable independent variable?', options:['Change in mass','Concentration of solution','Final mass','Mean change in mass'], a:1, explain:'Change the solution concentration and measure the resulting mass change.'},
+      {q:'Why blot plant tissue in the same way before reweighing?', options:['To control surface water that could affect measured mass','To cause osmosis','To increase solution concentration','To change the independent variable'], a:0, explain:'Extra solution on the outside would alter mass measurements, so drying method must be consistent.'}
+    ],
+    active:[
+      {q:'Which direction describes active transport?', options:['High to low concentration','Low to high concentration','High to low water concentration only','Random movement with no gradient'], a:1, explain:'Active transport moves substances against the concentration gradient, from low to high concentration.'},
+      {q:'What is required for active transport that diffusion does not require from the cell?', options:['Water','Energy','A concentration difference','Particles'], a:1, explain:'The cell supplies energy to move substances against the gradient.'},
+      {q:'Why might glucose need active transport in the small intestine?', options:['To move glucose into blood even when the gut concentration is lower','Because glucose is water','Because capillaries have thick walls','To move glucose from high to low concentration without energy'], a:0, explain:'When diffusion cannot move more glucose into the blood, active transport can move it against the gradient.'},
+      {q:'Which process is correctly matched?', options:['Osmosis — glucose only','Diffusion — always needs energy','Active transport — against a concentration gradient','Osmosis — low water to high water concentration'], a:2, explain:'Active transport moves specific substances against a concentration gradient and needs energy.'},
+      {q:'Which structure helps active transport move substances across a cell membrane?', options:['Transport proteins','Platelets','Heart valves','Haemoglobin'], a:0, explain:'Membrane transport proteins move specific substances across the membrane.'}
+    ]
+  };
+
+  const writingPrompts = [
+    {
+      id:'journey', title:'The journey of oxygen and glucose', marks:8,
+      q:'Explain how the human transport system moves oxygen and glucose from where they enter the body to body cells. Include how structures are adapted to make transport and exchange effective.',
+      plan:['Where oxygen enters the blood','Where glucose enters the blood','How oxygen is carried','How glucose is carried','Role of the heart','Arteries / veins / capillaries','Diffusion and gradients','Thin / large exchange surfaces'],
+      concepts:[
+        ['Oxygen enters blood at alveoli',['alveol','lung']],
+        ['Oxygen carried by haemoglobin in red blood cells',['haemoglobin','red blood']],
+        ['Glucose absorbed from small intestine',['small intestine','gut']],
+        ['Glucose transported in plasma / blood',['plasma','glucose']],
+        ['Heart pumps blood',['heart','pump']],
+        ['Vessels direct blood around body',['arter','vein','blood vessel']],
+        ['Capillaries are thin exchange sites',['capillar','one cell','thin']],
+        ['Diffusion down concentration gradients',['diffus','concentration gradient']]
+      ],
+      model:'Oxygen enters the blood at the alveoli in the lungs by diffusion because oxygen concentration is higher in the alveoli than in the blood. The alveoli and capillaries have thin walls and a large surface area, so the diffusion distance is short and exchange is efficient. Oxygen binds to haemoglobin in red blood cells. Glucose is absorbed from the small intestine into the blood and is carried mainly in the plasma; active transport can help uptake when glucose must move against a concentration gradient. The heart pumps the blood through arteries to tissues. In capillaries, oxygen and glucose move from the blood towards cells where they are needed for respiration. Veins return blood to the heart so circulation can continue.'
+    },
+    {
+      id:'exercise', title:'Circulation during exercise', marks:8,
+      q:'Explain why heart rate changes during exercise and how you could investigate this relationship reliably.',
+      plan:['Respiration demand','Oxygen and glucose','Heart rate','Independent variable','Dependent variable','Control variables','Repeats and mean','Evidence-based conclusion'],
+      concepts:[
+        ['Exercise increases respiration demand',['respiration']],
+        ['More oxygen and glucose are needed',['oxygen','glucose']],
+        ['Heart rate increases transport rate',['heart rate','increase']],
+        ['Independent variable identified',['independent','duration','intensity']],
+        ['Dependent variable is heart rate/BPM',['dependent','bpm']],
+        ['Controls keep the test fair',['control','same']],
+        ['Repeats and mean improve reliability',['repeat','mean','reliab']],
+        ['Conclusion uses results and science',['result','evidence','data']]
+      ],
+      model:'During exercise, muscle cells carry out respiration at a higher rate, so they need oxygen and glucose more quickly and produce waste more quickly. Heart rate increases so blood circulates faster and delivers these substances to the muscles. To investigate this, I could change exercise duration as the independent variable and measure heart rate in BPM as the dependent variable. I would keep the person, exercise type, pace and measuring method the same. I would repeat each duration, calculate a mean and plot mean heart rate against exercise duration. A conclusion should describe the pattern, use numerical evidence and explain the pattern using the increased demand for respiration.'
+    },
+    {
+      id:'vessels', title:'Structure and function', marks:8,
+      q:'Explain how the structures of the heart, arteries, veins and capillaries allow blood to circulate effectively around the body.',
+      plan:['Heart as a pump','Atria and ventricles','Valves','Septum','Arteries','Veins','Capillaries','Double circulation'],
+      concepts:[
+        ['Heart is a muscular pump',['heart','pump']],
+        ['Atria receive and ventricles pump',['atri','ventric']],
+        ['Valves prevent backflow',['valve','backflow']],
+        ['Septum separates sides',['septum','separat']],
+        ['Arteries thick/elastic for pressure',['arter','thick','elastic','pressure']],
+        ['Veins return blood and have valves',['vein','valve']],
+        ['Capillaries one cell thick for exchange',['capillar','one cell','thin','exchange']],
+        ['Pulmonary + systemic double circulation',['pulmonary','systemic','double']]
+      ],
+      model:'The heart is a muscular pump. The atria receive blood and the ventricles contract to push blood out. Valves prevent backflow and the septum keeps the two sides separate. Arteries carry blood away from the heart and have thick elastic walls so they can withstand and maintain high pressure. Veins return blood to the heart at lower pressure and contain valves that prevent backflow. Capillary walls are only one cell thick, creating a short diffusion distance for exchange with tissues. The pulmonary circuit moves blood between the heart and lungs, while the systemic circuit moves blood between the heart and the rest of the body, forming a double circulation.'
+    },
+    {
+      id:'transport', title:'Compare transport processes', marks:8,
+      q:'Compare diffusion, osmosis and active transport. Explain how concentration gradients determine which process occurs and give a human example for each where possible.',
+      plan:['Diffusion definition','Osmosis definition','Water only','Semi-permeable membrane','Active transport direction','Energy','Human diffusion example','Human active transport example'],
+      concepts:[
+        ['Diffusion high to low concentration',['diffus','high','low']],
