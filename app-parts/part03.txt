@@ -1,0 +1,75 @@
+          <div class="worked"><strong>Historical context</strong><p>René Dutrochet investigated osmosis in the 1820s and helped establish it as an important process in living systems, linking physical processes to biology.</p></div><div class="worked"><strong>Māra kai / kūmara connection</strong><p>Plant cells need water to stay turgid. In dry or salty conditions, water can leave cells by osmosis, reducing turgor and contributing to wilting.</p></div>
+        `},
+        {title:'Osmosis practical', body:()=>`
+          <div class="support-visual-grid">
+            ${figure(media.osmosisPractical,'BBC Bitesize image of an osmosis investigation using pieces of plant tissue in solutions','Osmosis investigation','BBC Bitesize GCSE Science')}
+          </div>
+          <h3>A strong investigation</h3>
+          <table class="mini-table"><tbody>
+            <tr><th>Independent variable</th><td>Concentration of the salt or sugar solution.</td></tr>
+            <tr><th>Dependent variable</th><td>Change in mass (or percentage change in mass) of equal-sized plant tissue pieces.</td></tr>
+            <tr><th>Control variables</th><td>Starting dimensions, time in solution, volume of solution, temperature, type/source of tissue and drying method before reweighing.</td></tr>
+            <tr><th>Reliability</th><td>Repeat each concentration and calculate a mean.</td></tr>
+          </tbody></table>
+          <div class="worked"><strong>Explaining results</strong><p>If a piece gains mass, there was a net movement of water into it. If it loses mass, there was a net movement of water out. A concentration causing little or no mass change is close to isotonic for that tissue.</p></div>
+          <div class="exam-tip"><strong>Conclusion:</strong> Describe the trend, quote evidence from the results and explain the trend using the direction of water movement across the membrane.</div>
+        `}
+      ]
+    },
+
+    active: {
+      number:'06', name:'Active Transport', short:'Active transport', icon:'⇧', colour:'#7357b8', soft:'#f0ecfc', subtitle:'Moving substances against a concentration gradient',
+      intro:'Compare active transport with diffusion and osmosis, then explain why cells sometimes need energy to move substances in the opposite direction to a concentration gradient.',
+      vocab:['active transport','concentration gradient','transport protein','pump','selectively permeable membrane','ions','glucose','energy'],
+      lessons:[
+        {title:'Active transport', body:()=>`
+          <p><strong>Active transport</strong> moves substances from <strong>low concentration to high concentration</strong>, against the concentration gradient. This requires <strong>energy</strong> and membrane <strong>transport proteins</strong>. Cell membranes are <strong>selectively permeable</strong>, helping control what enters and leaves cells.</p>
+          <div class="concept-grid">
+            <div class="concept"><strong>Direction</strong><p>Low concentration → high concentration.</p></div>
+            <div class="concept"><strong>Energy</strong><p>The cell must supply energy because the substance is being moved against the gradient.</p></div>
+            <div class="concept"><strong>Transport proteins</strong><p>Proteins in the cell membrane help move specific substances across.</p></div>
+          </div>
+          <div class="mistake"><strong>Common misconception:</strong> Active transport is not “fast diffusion”. It is different because the substance moves <strong>against</strong> the concentration gradient and energy is required.</div>
+          <div class="worked"><strong>Human example: the small intestine</strong><p>After digestion, glucose is absorbed from the gut into the blood. If the concentration of glucose in the gut becomes lower than in the blood, diffusion cannot continue in that direction. Active transport can still move glucose into the blood because energy is used to move it against the gradient.</p></div>
+          ${video('tM0bGaaQ2jY','Active Transport','Cognito','Focus on the direction of movement, the need for energy and the small-intestine example.')}
+          ${sourceBox(bbc.active)}
+        `},
+        {title:'Compare all three processes', body:()=>`
+          <table class="mini-table comparison-table"><thead><tr><th>Feature</th><th>Diffusion</th><th>Osmosis</th><th>Active transport</th></tr></thead><tbody>
+            <tr><td>What moves?</td><td>Particles / substances</td><td><strong>Water only</strong></td><td>Specific substances such as glucose or ions</td></tr>
+            <tr><td>Direction</td><td>High → low concentration</td><td>High → low <strong>water</strong> concentration</td><td>Low → high concentration</td></tr>
+            <tr><td>Membrane required?</td><td>Not always</td><td>Yes, semi-permeable</td><td>Yes, cell membrane with transport proteins</td></tr>
+            <tr><td>Cell energy required?</td><td>No</td><td>No</td><td><strong>Yes</strong></td></tr>
+          </tbody></table>
+          <div class="assessment-box"><strong>Decision rule</strong><p>Ask: <strong>What is moving?</strong> Then ask: <strong>Which direction relative to the concentration gradient?</strong> Finally ask: <strong>Is cell energy needed?</strong></p></div>
+          <div class="route"><span>Diffusion</span><b>↓</b><span>down a gradient</span><span>Osmosis</span><b>↓</b><span>water down a water-concentration gradient</span><span>Active transport</span><b>↑</b><span>against a gradient + energy</span></div>
+        `}
+      ]
+    }
+  };
+
+  const questions = {
+    blood:[
+      {q:'Which part of blood contains haemoglobin and transports oxygen?', options:['Plasma','Red blood cells','Platelets','White blood cells'], a:1, explain:'Red blood cells contain haemoglobin, which binds to oxygen.'},
+      {q:'Which substance is mainly transported dissolved in plasma?', options:['Oxygen bound to haemoglobin','Glucose','DNA','Bone mineral'], a:1, explain:'Plasma transports dissolved substances such as glucose, hormones, carbon dioxide and urea.'},
+      {q:'Which statement about deoxygenated blood is correct?', options:['It is blue','It is colourless','It is dark red','It contains no red blood cells'], a:2, explain:'Deoxygenated blood is dark red. Veins can look blue through skin.'},
+      {q:'What is the role of platelets?', options:['Carry oxygen','Make hormones','Help blood clot','Pump blood'], a:2, explain:'Platelets help form clots and reduce blood loss.'},
+      {q:'Which three parts make up the human transport system?', options:['Heart, lungs, stomach','Heart, blood vessels, blood','Brain, heart, kidneys','Blood, nerves, muscles'], a:1, explain:'The core transport system is the heart, blood vessels and blood.'}
+    ],
+    heart:[
+      {q:'Which vessel carries blood away from the heart to the lungs?', options:['Pulmonary vein','Vena cava','Pulmonary artery','Aorta'], a:2, explain:'The pulmonary artery carries blood away from the right ventricle to the lungs.'},
+      {q:'Why are artery walls thick and elastic?', options:['To stop all diffusion','To withstand high pressure','To make valves','To produce blood cells'], a:1, explain:'Arteries receive blood at high pressure from the heart, so strong elastic walls help withstand and maintain that pressure.'},
+      {q:'What is the main function of valves in veins?', options:['Increase oxygen concentration','Prevent backflow','Make the wall one cell thick','Increase blood temperature'], a:1, explain:'Valves prevent blood flowing backwards as it returns to the heart at lower pressure.'},
+      {q:'Why are capillaries effective exchange surfaces?', options:['They have the thickest walls','They contain valves','Their walls are one cell thick','They always carry oxygenated blood'], a:2, explain:'A one-cell-thick wall creates a short diffusion distance.'},
+      {q:'Why is human circulation described as double circulation?', options:['There are two hearts','Blood is always in two vessels','Blood passes through the heart twice in one full circuit','There are two types of blood'], a:2, explain:'Pulmonary and systemic circuits mean blood passes through the heart twice during one complete journey.'}
+    ],
+    heartrate:[
+      {q:'Why does heart rate normally increase during exercise?', options:['Muscles need more oxygen and glucose for respiration','Blood becomes blue','Veins close','The body stops respiring'], a:0, explain:'Active muscles respire faster, so blood must deliver oxygen and glucose more rapidly and remove wastes.'},
+      {q:'In a fair test of exercise duration against heart rate, what is the dependent variable?', options:['Exercise duration','Heart rate in BPM','The person used','The type of exercise'], a:1, explain:'The dependent variable is the outcome measured: heart rate.'},
+      {q:'Why repeat measurements?', options:['To change more variables','To improve reliability and calculate a mean','To guarantee the hypothesis is correct','To make the graph steeper'], a:1, explain:'Repeats reveal consistency and allow a mean to reduce random variation.'},
+      {q:'Which is the best control variable when changing exercise duration?', options:['Heart rate','Exercise duration','The exercise type and intensity','The final conclusion'], a:2, explain:'Keep exercise type/intensity consistent so duration is the main factor changed.'},
+      {q:'Which pattern often suggests greater cardiovascular fitness?', options:['Higher resting HR and slower recovery','Lower resting HR and faster recovery','No change in HR during exercise','Heart rate of zero after exercise'], a:1, explain:'Fitter people often have lower resting heart rates and recover more quickly.'}
+    ],
+    diffusion:[
+      {q:'What is diffusion?', options:['Net movement from low to high concentration','Net movement from high to low concentration','Movement of water only','Movement that always requires cell energy'], a:1, explain:'Diffusion is net movement down a concentration gradient, from high to low concentration.'},
+      {q:'What happens to particles at equilibrium?', options:['All movement stops','They continue moving but there is no net change','They all move to one side','They need energy to move'], a:1, explain:'Random particle movement continues, but equal movement in both directions gives no net change.'},
