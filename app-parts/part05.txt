@@ -31,12 +31,20 @@
 
   function renderChrome(){
     document.getElementById('xp-total').textContent = state.xp || 0;
-    moduleButtons.innerHTML = Object.entries(modules).map(([key,m])=>`
+    moduleButtons.innerHTML = Object.entries(modules).map(([key,m])=>{
+      const qCount=questions[key]?.length || 0;
+      const wCount=window.writtenQuestions?.[key]?.length || 0;
+      const detail=activeView==='check' ? `${qCount} multiple choice • ${wCount} written` : m.subtitle;
+      return `
       <button class="module-button ${activeModule===key && activeView!=='assessment'?'active':''}" data-module="${key}" type="button" style="--module-colour:${m.colour};--module-soft:${m.soft}">
-        <span class="module-icon">${m.icon}</span><span><strong>${m.number} ${m.name}</strong><small>${m.subtitle}</small></span>
-      </button>`).join('');
+        <span class="module-icon">${m.icon}</span><span><strong>${m.number} ${m.name}</strong><small>${detail}</small></span>
+      </button>`;
+    }).join('');
     moduleButtons.querySelectorAll('[data-module]').forEach(btn=>btn.addEventListener('click',()=>{
-      activeModule=btn.dataset.module; activeLesson=0; activeView='learn'; setActiveTab('learn'); saveState(); render();
+      activeModule=btn.dataset.module; activeLesson=0;
+      if(activeView!=='check') { activeView='learn'; setActiveTab('learn'); }
+      else setActiveTab('check');
+      saveState(); render();
     }));
     assessmentButton.classList.toggle('active',activeView==='assessment');
     renderProgress();
