@@ -23,7 +23,7 @@
     panel.style.setProperty('--accent',m.colour);
     const score=qs.filter((_,i)=>state.correct?.[`${activeModule}-${i}`]).length;
     panel.innerHTML=`
-      <div class="quiz-head"><div><p class="section-kicker">Quick Check • ${m.name}</p><h2>Answer from memory</h2><p class="lead">Try every question before going back to the notes. Correct answers are saved on this device.</p></div><div class="score-pill">Mastered ${score}/${qs.length}</div></div>
+      <div class="quiz-head"><div><p class="section-kicker">Practice Questions • ${m.name}</p><h2>Practise this section</h2><p class="lead">Answer the questions linked to this section before returning to the notes. Correct answers are saved on this device.</p></div><div class="score-pill">Mastered ${score}/${qs.length}</div></div>
       ${qs.map((q,i)=>renderQuestion(q,i)).join('')}
       <button class="reset-btn" id="reset-section" type="button">Reset this section</button>`;
     panel.querySelectorAll('.option').forEach(btn=>btn.addEventListener('click',handleAnswer));
@@ -43,7 +43,7 @@
       if(!state.correct[key]) addXP(10); state.correct[key]=true; saveState();
       fb.className='feedback good';fb.innerHTML=`<strong>Correct.</strong> ${q.explain}`;
     }else{
-      fb.className='feedback bad';fb.innerHTML=`<strong>Not yet.</strong> ${q.explain}<br><span>You can retry this question by reopening Quick Check.</span>`;
+      fb.className='feedback bad';fb.innerHTML=`<strong>Not yet.</strong> ${q.explain}<br><span>You can retry this question by reopening Practice Questions.</span>`;
       setTimeout(()=>{card.querySelectorAll('.option').forEach(b=>{b.disabled=false;b.classList.remove('correct','wrong')});fb.remove();},1800);
     }
     card.appendChild(fb); renderChrome();
