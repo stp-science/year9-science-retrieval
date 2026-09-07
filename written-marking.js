@@ -14,7 +14,7 @@ window.writtenMarking = {
     [
       [['cell','cells'], ['different','types']],
       [['plasma'], ['suspended','liquid']],
-      [['transport','carry'], ['defend','defence','immune','clot','clotting']]
+      [['transport','carry'], ['defend','defence','immune'], ['clot','clotting']]
     ]
   ],
   heart: [
@@ -92,8 +92,7 @@ window.writtenMarking = {
     [
       [['low','lower'], ['high','higher']],
       [['against'], ['gradient','concentration gradient']],
-      [['energy']],
-      [['transport protein','carrier protein','membrane protein']]
+      [['energy'], ['transport protein','carrier protein','membrane protein']]
     ],
     [
       [['glucose'], ['gut','small intestine'], ['lower','low'], ['blood']],
@@ -103,8 +102,7 @@ window.writtenMarking = {
     [
       [['diffusion'], ['high','higher'], ['low','lower']],
       [['active transport'], ['low','lower'], ['high','higher']],
-      [['diffusion'], ['no energy','does not require energy','without energy']],
-      [['active transport'], ['energy']]
+      [['diffusion'], ['no energy','does not require energy','without energy'], ['active transport'], ['energy']]
     ]
   ]
 };
