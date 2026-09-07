@@ -20,20 +20,25 @@
     const m=modules[activeModule], qs=questions[activeModule], written=window.writtenQuestions?.[activeModule]||[];
     panel.style.setProperty('--accent',m.colour);
     const score=qs.filter((_,i)=>state.correct?.[`${activeModule}-${i}`]).length;
-    const writtenDone=written.filter((_,i)=>state.writtenChecked?.[`${activeModule}-written-${i}`]).length;
+    const writtenDone=written.filter((_,i)=>state.writtenCorrect?.[`${activeModule}-written-${i}`]).length;
     panel.innerHTML=`
-      <div class="quiz-head"><div><p class="section-kicker">Practice Questions • ${m.name}</p><h2>Multiple-choice + written practice</h2><p class="lead">Every course section has both question types. Complete the multiple-choice questions, then write your own answers to the short-answer questions before checking the key ideas and model answer.</p></div><div class="score-pill">MCQ ${score}/${qs.length} • Written ${writtenDone}/${written.length}</div></div>
+      <div class="quiz-head"><div><p class="section-kicker">Practice Questions • ${m.name}</p><h2>Multiple-choice + written practice</h2><p class="lead">Complete every question correctly. Written answers must include the key scientific ideas before they count towards mastery and game unlocks.</p></div><div class="score-pill">MCQ ${score}/${qs.length} • Written ${writtenDone}/${written.length}</div></div>
       <h3>Multiple-choice practice</h3>
       ${qs.map((q,i)=>renderQuestion(q,i)).join('')}
       <h3 style="margin-top:28px">Written practice</h3>
-      <p class="lead">Write in full sentences. Focus on the command word and use precise scientific vocabulary.</p>
+      <p class="lead">Write in full sentences. Use the command word and precise scientific vocabulary, then check your answer.</p>
       ${written.map((q,i)=>renderWrittenQuestion(q,i)).join('')}
       <button class="reset-btn" id="reset-section" type="button">Reset this section</button>`;
     panel.querySelectorAll('.option').forEach(btn=>btn.addEventListener('click',handleAnswer));
     panel.querySelectorAll('[data-written-input]').forEach(area=>area.addEventListener('input',e=>{
+      const key=e.currentTarget.dataset.writtenInput;
       if(!state.writtenAnswers) state.writtenAnswers={};
-      state.writtenAnswers[e.currentTarget.dataset.writtenInput]=e.currentTarget.value;
+      state.writtenAnswers[key]=e.currentTarget.value;
+      const wasCorrect=!!state.writtenCorrect?.[key];
+      if(state.writtenChecked) delete state.writtenChecked[key];
+      if(state.writtenCorrect) delete state.writtenCorrect[key];
       saveState();
+      if(wasCorrect) renderChrome();
     }));
     panel.querySelectorAll('[data-check-written]').forEach(btn=>btn.addEventListener('click',()=>checkWritten(Number(btn.dataset.checkWritten))));
     document.getElementById('reset-section').addEventListener('click',()=>{
@@ -42,6 +47,8 @@
         const key=`${activeModule}-written-${i}`;
         if(state.writtenAnswers) delete state.writtenAnswers[key];
         if(state.writtenChecked) delete state.writtenChecked[key];
+        if(state.writtenCorrect) delete state.writtenCorrect[key];
+        if(state.writtenAwarded) delete state.writtenAwarded[key];
       });
       saveState();renderChrome();renderCheck();
     });
@@ -70,12 +77,13 @@
     const key=`${activeModule}-written-${i}`;
     const answer=state.writtenAnswers?.[key] || '';
     const checked=!!state.writtenChecked?.[key];
+    const correct=!!state.writtenCorrect?.[key];
     return `<div class="question-card written-card" data-written-card="${i}">
-      <div class="question-num">${q.command} • Written question ${i+1} of ${(window.writtenQuestions?.[activeModule]||[]).length}</div>
+      <div class="question-num">${q.command} • Written question ${i+1} of ${(window.writtenQuestions?.[activeModule]||[]).length}${correct?' • ✓ Correct':''}</div>
       <h3>${q.q}</h3>
       <textarea class="writing-area" style="min-height:125px" data-written-input="${key}" placeholder="Write your answer here before checking...">${escapeHtml(answer)}</textarea>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="primary-btn" data-check-written="${i}" type="button">Check your answer</button></div>
-      <div id="written-feedback-${i}">${checked?writtenFeedback(q):''}</div>
+      <div id="written-feedback-${i}">${checked?writtenFeedback(q,i,answer):''}</div>
     </div>`;
   }
 
@@ -83,9 +91,20 @@
     return String(value).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
   }
 
-  function writtenFeedback(q){
-    return `<div class="assessment-box"><strong>Compare your answer with these key ideas</strong><ul>${q.keyPoints.map(x=>`<li>${x}</li>`).join('')}</ul></div>
-      <details class="model-answer"><summary>Show model answer</summary><p>${q.model}</p><p><strong>Next step:</strong> close the model and improve your answer in your own words.</p></details>`;
+  function markWritten(i,text){
+    const requirements=window.writtenMarking?.[activeModule]?.[i] || [];
+    const normal=String(text).toLowerCase().replace(/\s+/g,' ').trim();
+    const hits=requirements.map(requirement=>requirement.every(group=>group.some(term=>normal.includes(String(term).toLowerCase()))));
+    return {hits,correct:requirements.length>0 && hits.every(Boolean)};
+  }
+
+  function writtenFeedback(q,i,text){
+    const result=markWritten(i,text);
+    const summary=result.correct
+      ? '<div class="feedback good"><strong>Correct.</strong> Your answer includes all the required scientific ideas.</div>'
+      : '<div class="feedback bad"><strong>Not yet.</strong> Add the missing scientific ideas, then check again. This question will not count towards the game unlock until it is correct.</div>';
+    return `${summary}<div class="assessment-box"><strong>Key ideas</strong><ul>${q.keyPoints.map((x,j)=>`<li>${result.hits[j]?'✓':'○'} ${x}</li>`).join('')}</ul></div>
+      <details class="model-answer"><summary>Show model answer</summary><p>${q.model}</p><p><strong>Next step:</strong> close the model and improve your answer in your own words, then check it again.</p></details>`;
   }
 
   function checkWritten(i){
@@ -96,11 +115,15 @@
       target.innerHTML='<div class="feedback bad"><strong>Write an answer first.</strong> Aim for at least one complete scientific sentence before checking.</div>';
       return;
     }
+    const result=markWritten(i,area.value);
     if(!state.writtenChecked) state.writtenChecked={};
-    if(!state.writtenChecked[key]) addXP(5);
+    if(!state.writtenCorrect) state.writtenCorrect={};
+    if(!state.writtenAwarded) state.writtenAwarded={};
     state.writtenChecked[key]=true;
+    state.writtenCorrect[key]=result.correct;
+    if(result.correct && !state.writtenAwarded[key]){ state.writtenAwarded[key]=true; addXP(10); }
     saveState();
-    target.innerHTML=writtenFeedback(window.writtenQuestions[activeModule][i]);
+    target.innerHTML=writtenFeedback(window.writtenQuestions[activeModule][i],i,area.value);
     renderChrome();
   }
 
