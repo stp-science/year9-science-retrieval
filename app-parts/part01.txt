@@ -1,0 +1,75 @@
+            <tr><td><strong>White blood cells</strong></td><td>Help defend the body against pathogens.</td><td>Part of the immune response.</td></tr>
+            <tr><td><strong>Platelets</strong></td><td>Help blood clot.</td><td>Reduce blood loss when a blood vessel is damaged.</td></tr>
+          </tbody></table>
+          <div class="mistake"><strong>Common misconception:</strong> Deoxygenated blood is not blue. It is dark red; veins can look blue through the skin.</div>
+          <div class="mistake"><strong>Common misconception:</strong> Blood is not “just a liquid”. It is a <strong>tissue</strong> containing cells and platelets suspended in plasma.</div>
+          ${video('81w0BXg7QJA','What Is Blood Made of? / What Does Blood Do?','Cognito','Focus on the four blood components and what each one does.')}
+          ${sourceBox(bbc.circulation)}
+        `}
+      ]
+    },
+
+    heart: {
+      number:'02', name:'Heart & Blood Vessels', short:'Heart & vessels', icon:'♥', colour:'#d44d5f', soft:'#fff0f2', subtitle:'Structure, blood flow and double circulation',
+      intro:'Link the structure of the heart and blood vessels to their functions in moving blood efficiently around the lungs and the rest of the body.',
+      vocab:['atrium','ventricle','valve','septum','aorta','vena cava','pulmonary artery','pulmonary vein','artery','vein','capillary','double circulation'],
+      lessons:[
+        {title:'Heart structure and flow', body:()=>`
+          <div class="support-visual-grid">
+            ${figure(media.heart,'BBC Bitesize labelled diagram of the human heart','Heart structure','BBC Bitesize GCSE Science')}
+            ${figure(media.circulation,'BBC Bitesize diagram of double circulation between heart, lungs and body','Double circulation','BBC Bitesize GCSE Science')}
+          </div>
+          <p>The heart has four chambers: two <strong>atria</strong> that receive blood and two <strong>ventricles</strong> that pump blood out. <strong>Valves</strong> stop backflow and the <strong>septum</strong> separates the left and right sides.</p>
+          <div class="route"><span>Body</span><b>→</b><span>vena cava</span><b>→</b><span>right atrium</span><b>→</b><span>right ventricle</span><b>→</b><span>pulmonary artery</span><b>→</b><span>Lungs</span></div>
+          <div class="route"><span>Lungs</span><b>→</b><span>pulmonary vein</span><b>→</b><span>left atrium</span><b>→</b><span>left ventricle</span><b>→</b><span>aorta</span><b>→</b><span>Body</span></div>
+          <div class="worked"><strong>Why “double” circulation?</strong><p>In one complete journey around the body, blood passes through the heart twice: once between the heart and lungs (<strong>pulmonary</strong>) and once between the heart and the rest of the body (<strong>systemic</strong>).</p></div>
+          <div class="worked"><strong>Why circulation matters</strong><p>Blood pressure is a measure linked to the force of blood on artery walls. In CPR, chest compressions help keep some blood moving when the heart is not pumping effectively.</p></div><div class="mistake"><strong>Common misconception:</strong> The heart is not simply “on the left”. It lies mostly centrally in the chest and is tilted to the left.</div>
+          ${video('31nyaBdC-q8','The Heart','Cognito','Use the video to rehearse chamber names, major vessels and the direction of blood flow.')}
+        `},
+        {title:'Arteries, veins and capillaries', body:()=>`
+          <div class="support-visual-grid">
+            ${figure(media.vessels,'BBC Bitesize comparison of artery, vein and capillary structures','Blood vessel structure','BBC Bitesize GCSE Science')}
+          </div>
+          <table class="mini-table comparison-table"><thead><tr><th>Vessel</th><th>Direction</th><th>Structure</th><th>Why the structure helps</th></tr></thead><tbody>
+            <tr><td>Artery</td><td>Away from the heart</td><td>Thick, strong, elastic walls</td><td>Withstands and maintains high pressure from the heart.</td></tr>
+            <tr><td>Vein</td><td>Towards the heart</td><td>Valves; thinner walls</td><td>Valves prevent backflow as blood returns at lower pressure.</td></tr>
+            <tr><td>Capillary</td><td>Links small arteries and veins in tissues</td><td>Wall is one cell thick</td><td>Short diffusion distance allows rapid exchange of substances.</td></tr>
+          </tbody></table>
+          <div class="mistake"><strong>Common misconception:</strong> Arteries do not always carry oxygenated blood. The rule is <strong>arteries carry blood away from the heart</strong>. The pulmonary artery carries deoxygenated blood to the lungs.</div>
+          <div class="exam-tip"><strong>Structure → function:</strong> Name the feature, then explain how it helps. Example: “Capillaries are one cell thick, so the diffusion distance is short and substances can exchange rapidly.”</div>
+          ${video('AlSQEs694qY','Blood Vessels','Cognito','Compare arteries, veins and capillaries and link each structure to its function.')}
+          ${sourceBox(bbc.ks3circulation)}
+        `}
+      ]
+    },
+
+    heartrate: {
+      number:'03', name:'Heart Rate Investigation', short:'Heart rate', icon:'⌁', colour:'#e47c32', soft:'#fff3e8', subtitle:'Exercise response, fair tests and reliable evidence',
+      intro:'Explain why heart rate changes during exercise and revise the practical skills needed to design, analyse and evaluate a heart-rate investigation.',
+      vocab:['pulse','BPM','independent variable','dependent variable','control variable','reliability','mean','recovery rate','respiration'],
+      lessons:[
+        {title:'Why heart rate changes', body:()=>`
+          <p>During exercise, muscle cells need more energy. The rate of <strong>respiration</strong> increases, so the cells need more <strong>oxygen and glucose</strong> and produce more waste.</p>
+          <div class="route"><span>Exercise increases</span><b>→</b><span>respiration demand increases</span><b>→</b><span>more oxygen + glucose needed</span><b>→</b><span>heart rate increases</span><b>→</b><span>blood delivers substances faster</span></div>
+          <div class="concept-grid">
+            <div class="concept"><strong>Resting heart rate</strong><p>The number of heart beats per minute when the body is resting.</p></div>
+            <div class="concept"><strong>Pulse</strong><p>The pressure wave felt in an artery each time the heart pumps.</p></div>
+            <div class="concept"><strong>Recovery</strong><p>How quickly heart rate returns towards its resting value after exercise.</p></div>
+          </div>
+          <div class="mistake"><strong>Common misconception:</strong> The heart does not speed up simply “because the body is moving”. Link the change to increased respiration and the need to transport oxygen and glucose.</div>
+          <div class="mistake"><strong>Common misconception:</strong> Fitness does not mean having a high resting heart rate. Fitter people often have a lower resting heart rate and a faster recovery after exercise.</div>
+        `},
+        {title:'Plan a fair test', body:()=>`
+          <h3>Example question</h3>
+          <p><strong>How does exercise duration affect heart rate?</strong></p>
+          <table class="mini-table"><tbody>
+            <tr><th>Independent variable</th><td>Duration of exercise, for example 30 s, 60 s, 90 s and 120 s.</td></tr>
+            <tr><th>Dependent variable</th><td>Heart rate in beats per minute (BPM).</td></tr>
+            <tr><th>Control variables</th><td>Same person, same exercise, same intensity/pace, same method of measuring pulse, same recovery time before each repeat.</td></tr>
+            <tr><th>Repeats</th><td>Repeat each condition and calculate a <strong>mean</strong> to reduce the effect of random variation.</td></tr>
+          </tbody></table>
+          <div class="worked"><strong>Reliability</strong><p>Repeats help show whether a pattern is consistent. A mean reduces the influence of random variation. If one result is very different, check whether it is an anomaly before deciding whether to exclude it.</p></div>
+          <div class="worked"><strong>Presenting data</strong><p>Put the independent variable in the first column of a table and on the x-axis of a graph. Put heart rate on the y-axis, including units (BPM).</p></div>
+          <div class="exam-tip"><strong>Conclusion pattern:</strong> State the pattern, use data as evidence, then explain it using respiration and transport. Do not write only “my hypothesis was correct”.</div>
+        `},
+        {title:'Evaluate the investigation', body:()=>`
