@@ -1,0 +1,75 @@
+        ['Osmosis is water movement',['osmos','water']],
+        ['Osmosis uses semi-permeable membrane',['semi','membrane']],
+        ['Water moves high to low water concentration',['water concentration','dilute','concentrated']],
+        ['Active transport low to high',['active transport','low','high']],
+        ['Active transport needs energy',['energy']],
+        ['Diffusion example at alveoli/capillaries',['alveol','capillar','oxygen']],
+        ['Active transport example in small intestine',['small intestine','gut','glucose']]
+      ],
+      model:'Diffusion is the net movement of particles from high to low concentration, down a concentration gradient, and it does not require energy from the cell. Oxygen diffuses from alveoli into blood. Osmosis is the net movement of water across a semi-permeable membrane from high water concentration to low water concentration; it applies to water only. Active transport moves specific substances from low to high concentration, against a concentration gradient, so the cell must supply energy and use transport proteins. In the small intestine, active transport can move glucose into the blood even when the glucose concentration in the gut is lower than in the blood.'
+    }
+  ];
+
+  const state = loadState();
+  let activeModule = state.activeModule || 'blood';
+  let activeView = 'learn';
+  let activeLesson = 0;
+
+  const panel = document.getElementById('content-panel');
+  const moduleButtons = document.getElementById('module-buttons');
+  const assessmentButton = document.getElementById('assessment-button');
+
+  function loadState(){
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {correct:{}, xp:0}; }
+    catch { return {correct:{}, xp:0}; }
+  }
+  function saveState(){
+    state.activeModule = activeModule;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+  function addXP(amount){ state.xp = Math.max(0,(state.xp||0)+amount); saveState(); renderChrome(); }
+
+  function renderChrome(){
+    document.getElementById('xp-total').textContent = state.xp || 0;
+    moduleButtons.innerHTML = Object.entries(modules).map(([key,m])=>`
+      <button class="module-button ${activeModule===key && activeView!=='assessment'?'active':''}" data-module="${key}" type="button" style="--module-colour:${m.colour};--module-soft:${m.soft}">
+        <span class="module-icon">${m.icon}</span><span><strong>${m.number} ${m.name}</strong><small>${m.subtitle}</small></span>
+      </button>`).join('');
+    moduleButtons.querySelectorAll('[data-module]').forEach(btn=>btn.addEventListener('click',()=>{
+      activeModule=btn.dataset.module; activeLesson=0; activeView='learn'; setActiveTab('learn'); saveState(); render();
+    }));
+    assessmentButton.classList.toggle('active',activeView==='assessment');
+    renderProgress();
+    renderGamesBadge();
+  }
+
+  function mastery(key){
+    const qs = questions[key];
+    const hits = qs.filter((_,i)=>state.correct?.[`${key}-${i}`]).length;
+    return Math.round((hits/qs.length)*100);
+  }
+  function renderProgress(){
+    const target=document.getElementById('dashboard-progress');
+    target.innerHTML=Object.entries(modules).map(([key,m])=>{
+      const pct=mastery(key);
+      return `<div class="progress-item"><div class="progress-head"><span>${m.short}</span><strong>${pct}%</strong></div><div class="progress-track"><span style="width:${pct}%"></span></div></div>`;
+    }).join('');
+  }
+  const unlocks = [
+    {id:'bloodblitz', name:'Blood Blitz', req:['blood','heart']},
+    {id:'routerush', name:'Route Rush', req:['heartrate','diffusion']},
+    {id:'gradientgrid', name:'Gradient Grid', req:['osmosis','active']}
+  ];
+  function isUnlocked(game){return game.req.every(k=>mastery(k)>=80)}
+  function renderGamesBadge(){document.getElementById('games-badge').textContent=`${unlocks.filter(isUnlocked).length}/3`;}
+
+  function setActiveTab(view){
+    document.querySelectorAll('.mode-tab').forEach(b=>b.classList.toggle('active',b.dataset.view===view));
+  }
+  document.querySelectorAll('.mode-tab').forEach(btn=>btn.addEventListener('click',()=>{
+    activeView=btn.dataset.view; setActiveTab(activeView); renderChrome(); render();
+  }));
+  assessmentButton.addEventListener('click',()=>{activeView='assessment';setActiveTab('exam');renderChrome();render();});
+
+  function render(){
+    renderChrome();
