@@ -1,43 +1,6 @@
-    if(!state.writing) state.writing={};
-    if((state.writing[p.id]||0)<score){ addXP((score-(state.writing[p.id]||0))*3); state.writing[p.id]=score; saveState(); }
-    const level=score>=7?'Strong coverage':score>=5?'Good start — add the missing links':'More science needed';
-    target.innerHTML=`<div class="feedback ${score>=5?'good':'bad'}"><strong>${level}: ${score}/${p.concepts.length} key ideas detected.</strong> Improve any missing ideas, then compare with the model.</div>
-      <div class="concept-results">${results.map(r=>`<div class="concept-hit ${r.hit?'yes':''}">${r.hit?'✓':'○'} ${r.label}</div>`).join('')}</div>
-      <details class="model-answer"><summary>Show model answer</summary><p>${p.model}</p><p><strong>Improve yours:</strong> do not copy the model. Close it, then rewrite your explanation from memory using the missing ideas.</p></details>`;
-  }
-
-  function renderAssessmentPrep(){
-    panel.style.setProperty('--accent','#d29a22');
-    panel.innerHTML=`<p class="section-kicker">Assessment Prep</p><h2>Build explanations, not fact lists</h2><p class="lead">The strongest extended writing joins ideas across the transport system. Use this page as a final checklist before attempting the practice questions.</p>
-      <div class="assessment-overview">
-        <div class="concept"><strong>1. Name the mechanism</strong><p>Use exact terms: diffusion, osmosis, active transport, pumping, concentration gradient.</p></div>
-        <div class="concept"><strong>2. Give the direction</strong><p>State where a substance moves from and to. For diffusion, say high → low concentration.</p></div>
-        <div class="concept"><strong>3. Link structure to function</strong><p>Do not just name a feature. Explain why thin walls, valves, elastic walls or large surface area help.</p></div>
-        <div class="concept"><strong>4. Connect body systems</strong><p>Link lungs and small intestine to blood, the heart to circulation and capillaries to exchange.</p></div>
-        <div class="concept"><strong>5. Use cause → effect</strong><p>“Because… therefore… so…” forces you to explain rather than describe.</p></div>
-        <div class="concept"><strong>6. Check misconceptions</strong><p>Water only for osmosis; particles still move at equilibrium; arteries are defined by direction, not oxygen content.</p></div>
-      </div>
-      <h3>High-value sentence patterns</h3>
-      <div class="sentence-frame"><strong>Structure → function:</strong> “Capillaries have ___, which means ___, so ___.”</div>
-      <div class="sentence-frame"><strong>Gradient:</strong> “The concentration of ___ is higher in ___ than ___, so ___ diffuses from ___ to ___.”</div>
-      <div class="sentence-frame"><strong>Exercise:</strong> “During exercise, ___ increases because ___. Therefore the heart ___ so that ___.”</div>
-      <div class="sentence-frame"><strong>Practical conclusion:</strong> “As ___ increased, ___ changed from ___ to ___. This suggests ___ because ___.”</div>
-      <h3>Final knowledge checklist</h3>
-      <table class="mini-table"><tbody>
-        <tr><th>Blood</th><td>plasma, red cells + haemoglobin, white cells, platelets; oxygen, nutrients, hormones and wastes</td></tr>
-        <tr><th>Heart & vessels</th><td>four chambers, valves, septum, major vessels, double circulation; artery/vein/capillary adaptations</td></tr>
-        <tr><th>Heart rate practical</th><td>respiration link; IV/DV/controls; repeats, mean, graph, conclusion and evaluation</td></tr>
-        <tr><th>Diffusion</th><td>high → low; concentration gradient; equilibrium; thin/large exchange surfaces; high SA:V</td></tr>
-        <tr><th>Osmosis</th><td>water only; semi-permeable membrane; water concentration; hypo/iso/hypertonic; practical evidence</td></tr>
-        <tr><th>Active transport</th><td>low → high; against gradient; energy + transport proteins; glucose uptake example</td></tr>
-      </tbody></table>
-      <button class="primary-btn" id="go-writing" type="button">Go to extended-writing practice</button>`;
-    document.getElementById('go-writing').addEventListener('click',()=>{activeView='exam';setActiveTab('exam');renderChrome();renderExamList();});
-  }
-
   function renderGames(){
     panel.style.setProperty('--accent','#6f55bd');
-    panel.innerHTML=`<p class="section-kicker">Revision Arcade</p><h2>Unlock games by mastering Quick Checks</h2><p class="lead">Reach at least 80% in the two linked sections to unlock each game. The science still comes first.</p>
+    panel.innerHTML=`<p class="section-kicker">Revision Arcade</p><h2>Unlock games by mastering practice questions</h2><p class="lead">Reach at least 80% on the multiple-choice practice in the two linked sections to unlock each game. The science still comes first.</p>
       <div class="arcade-grid">${unlocks.map((g,i)=>gameCard(g,i)).join('')}</div><div id="game-host"></div>`;
     panel.querySelectorAll('[data-game]').forEach(btn=>btn.addEventListener('click',()=>launchGame(btn.dataset.game)));
   }
