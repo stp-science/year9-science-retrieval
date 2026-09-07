@@ -1,4 +1,4 @@
-# Year 9 Transport Systems in Humans Revision
+# Year 9 Transport in the Body Revision
 
 Interactive revision site for St Peter's School Year 9 Science.
 
@@ -9,9 +9,10 @@ Interactive revision site for St Peter's School Year 9 Science.
 - Exchange surfaces and diffusion
 - Osmosis and investigation skills
 - Active transport
-- Extended-writing assessment preparation
 
-The site uses BBC Bitesize diagrams/images for reinforcement and embedded GCSE Science videos. Progress and XP are saved locally on the student's device.
+The site includes multiple-choice and written practice questions for every section, revision games that unlock after full mastery, BBC Bitesize diagrams/images for reinforcement, and embedded GCSE Science videos. Progress and XP are saved locally on the student's device.
 
 ## GitHub Pages
-Publish the repository from the `main` branch root to use the site with GitHub Pages.
+The live site is published from the `gh-pages` branch.
+
+https://stp-science.github.io/year9-transport-in-the-body-revision/
