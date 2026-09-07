@@ -52,9 +52,12 @@
   }
 
   function mastery(key){
-    const qs = questions[key];
-    const hits = qs.filter((_,i)=>state.correct?.[`${key}-${i}`]).length;
-    return Math.round((hits/qs.length)*100);
+    const qs = questions[key] || [];
+    const written = window.writtenQuestions?.[key] || [];
+    const mcqHits = qs.filter((_,i)=>state.correct?.[`${key}-${i}`]).length;
+    const writtenHits = written.filter((_,i)=>state.writtenCorrect?.[`${key}-written-${i}`]).length;
+    const total = qs.length + written.length;
+    return total ? Math.round(((mcqHits + writtenHits) / total) * 100) : 0;
   }
   function renderProgress(){
     const target=document.getElementById('dashboard-progress');
@@ -68,7 +71,7 @@
     {id:'routerush', name:'Route Rush', req:['heartrate','diffusion']},
     {id:'gradientgrid', name:'Gradient Grid', req:['osmosis','active']}
   ];
-  function isUnlocked(game){return game.req.every(k=>mastery(k)>=80)}
+  function isUnlocked(game){return game.req.every(k=>mastery(k)===100)}
   function renderGamesBadge(){document.getElementById('games-badge').textContent=`${unlocks.filter(isUnlocked).length}/3`;}
 
   function setActiveTab(view){
