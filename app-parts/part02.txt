@@ -54,8 +54,8 @@
         {title:'What is osmosis?', body:()=>`
           <p><strong>Osmosis</strong> is the <strong>net movement of water</strong> across a <strong>semi-permeable membrane</strong> from a region of <strong>high water concentration</strong> (more dilute) to a region of <strong>low water concentration</strong> (more concentrated).</p>
           <div class="support-visual-grid">
-            ${figure(media.osmosisStart,'BBC Bitesize diagram showing solutions of different concentrations separated by a membrane','Starting concentrations','BBC Bitesize GCSE Science')}
-            ${figure(media.osmosisMove,'BBC Bitesize diagram showing movement of water across a membrane','Net movement of water','BBC Bitesize GCSE Science')}
+            ${figure('https://commons.wikimedia.org/wiki/Special:FilePath/Osmose_en.svg','GCSE-level osmosis diagram showing water moving through a semi-permeable membrane towards the more concentrated solution','Osmosis across a membrane','Wikimedia Commons • Hans Hillewaert • <a href="https://commons.wikimedia.org/wiki/File:Osmose_en.svg" target="_blank" rel="noopener">source</a> • CC BY-SA 3.0')}
+            ${figure('https://commons.wikimedia.org/wiki/Special:FilePath/Hypertonic_Isotonic_Hypotonic.png','GCSE-level diagram showing water movement in hypotonic, isotonic and hypertonic solutions','Tonicity and water movement','Wikimedia Commons • Christinelmiller • <a href="https://commons.wikimedia.org/wiki/File:Hypertonic_Isotonic_Hypotonic.png" target="_blank" rel="noopener">source</a> • CC BY-SA 4.0')}
           </div>
           <div class="concept-grid">
             <div class="concept"><strong>Hypotonic</strong><p>The surrounding solution is more dilute than the cell: water tends to move into the cell.</p></div>
@@ -69,7 +69,7 @@
         `},
         {title:'Cells in different solutions', body:()=>`
           <div class="support-visual-grid">
-            ${figure(media.osmosisCells,'BBC Bitesize diagram showing cell responses to different solution concentrations','Cells and osmosis','BBC Bitesize GCSE Science')}
+            ${figure('https://commons.wikimedia.org/wiki/Special:FilePath/Elodea_in_different_osmotic_solutions.png','GCSE-level diagram showing plant cells in hypotonic, isotonic and hypertonic solutions','Plant cells in different solutions','Wikimedia Commons • Iraselia • <a href="https://commons.wikimedia.org/wiki/File:Elodea_in_different_osmotic_solutions.png" target="_blank" rel="noopener">source</a> • CC BY-SA 4.0')}
           </div>
           <p>Osmosis changes the amount of water inside cells. In plant tissues, water entering cells increases <strong>turgor</strong>; water leaving cells causes the cells to become less turgid and the tissue may wilt.</p>
           <div class="worked"><strong>Everyday example: food preservation</strong><p>Very salty or sugary surroundings can draw water out of microorganisms by osmosis. This is one reason high-salt or high-sugar foods can slow microbial growth.</p></div>
