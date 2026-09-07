@@ -1,0 +1,75 @@
+          <h3>A strong evaluation asks what limits confidence in the result.</h3>
+          <div class="concept-grid">
+            <div class="concept"><strong>Measurement</strong><p>Counting pulse manually can introduce reaction-time or counting errors. A heart-rate monitor can improve consistency.</p></div>
+            <div class="concept"><strong>Control</strong><p>Exercise intensity can vary. Use a metronome, fixed step height or clearly controlled pace.</p></div>
+            <div class="concept"><strong>Sample</strong><p>One person cannot represent everyone. Test several people if the question is about people in general.</p></div>
+          </div>
+          <div class="assessment-box"><strong>Evaluation sentence frame</strong><p>“A limitation is ___ because ___. This could make the results ___. I would improve it by ___ so that ___.”</p></div>
+        `}
+      ]
+    },
+
+    diffusion: {
+      number:'04', name:'Exchange Surfaces & Diffusion', short:'Diffusion', icon:'↔', colour:'#387db5', soft:'#eaf4fc', subtitle:'Gradients, exchange surfaces and surface area',
+      intro:'Use the particle model to explain diffusion, then connect concentration gradients and exchange-surface adaptations to efficient transport in the body.',
+      vocab:['diffusion','concentration gradient','equilibrium','surface area','surface area to volume ratio','exchange surface','alveoli','villi','capillaries'],
+      lessons:[
+        {title:'Diffusion and concentration gradients', body:()=>`
+          <p><strong>Diffusion</strong> is the <strong>net movement of particles from an area of high concentration to an area of low concentration</strong>, down a concentration gradient.</p>
+          <div class="concept-grid">
+            <div class="concept"><strong>High concentration</strong><p>More particles in a given space.</p></div>
+            <div class="concept"><strong>Concentration gradient</strong><p>A difference in concentration between two places.</p></div>
+            <div class="concept"><strong>Equilibrium</strong><p>Particles still move randomly, but there is no net change in concentration.</p></div>
+          </div>
+          <div class="mistake"><strong>Common misconception:</strong> Diffusion does not stop at equilibrium. Particles continue moving in both directions; there is simply no overall net movement one way.</div>
+          <div class="worked"><strong>In the lungs</strong><p>Oxygen diffuses from the air in the alveoli, where its concentration is higher, into the blood, where its concentration is lower. Carbon dioxide diffuses in the opposite direction.</p></div>
+          ${video('vbdwTor6H14','Diffusion, Osmosis & Active Transport','Science Shorts','For this section, focus on the diffusion explanation: particles move down a concentration gradient without an energy input from the cell.')}
+          ${sourceBox(bbc.diffusion)}
+        `},
+        {title:'Efficient exchange surfaces', body:()=>`
+          <div class="support-visual-grid">
+            ${figure(media.alveolus,'BBC Bitesize diagram of diffusion between an alveolus and a capillary','Gas exchange at an alveolus','BBC Bitesize GCSE Science')}
+            ${figure(media.alveoli,'BBC Bitesize diagram of alveoli and surrounding capillaries','Alveoli and capillaries','BBC Bitesize GCSE Science')}
+          </div>
+          <p>Exchange surfaces are adapted to make diffusion faster and more effective.</p>
+          <table class="mini-table"><thead><tr><th>Feature</th><th>How it helps diffusion</th></tr></thead><tbody>
+            <tr><td>Large surface area</td><td>More particles can cross the surface at the same time.</td></tr>
+            <tr><td>Thin surface</td><td>Short diffusion distance.</td></tr>
+            <tr><td>Good blood supply / flow</td><td>Moves substances away and brings new substances in, helping maintain a steep concentration gradient.</td></tr>
+            <tr><td>High surface area : volume ratio</td><td>A large amount of exchange surface is available compared with the amount of tissue being supplied.</td></tr>
+          </tbody></table>
+          <p><strong>Alveoli</strong> in the lungs and <strong>villi</strong> in the small intestine both have a large surface area and thin exchange surfaces. Capillary walls are also only one cell thick.</p>
+          <div class="worked"><strong>Surface area : volume ratio</strong><p>Smaller structures usually have a higher surface area : volume ratio. A high ratio means more surface is available for exchange relative to volume, so diffusion can be more efficient.</p></div>
+          <div class="mistake"><strong>Common misconception:</strong> “Bigger” is not automatically better for exchange. What matters is having a large surface area compared with volume.</div>
+          <div class="assessment-box"><strong>Asthma link</strong><p>If airway lining becomes inflamed or extra mucus is present, the effective diffusion pathway can become less favourable. This reduces the efficiency of gas exchange.</p></div>
+        `}
+      ]
+    },
+
+    osmosis: {
+      number:'05', name:'Osmosis & Investigation', short:'Osmosis', icon:'💧', colour:'#277fa5', soft:'#e9f7fb', subtitle:'Water movement, tonicity and practical evidence',
+      intro:'Define osmosis precisely, predict how cells or tissues change in different solutions and use practical results to justify a conclusion.',
+      vocab:['osmosis','semi-permeable membrane','solute','solvent','dilute','concentrated','hypotonic','isotonic','hypertonic','net movement','water concentration'],
+      lessons:[
+        {title:'What is osmosis?', body:()=>`
+          <p><strong>Osmosis</strong> is the <strong>net movement of water</strong> across a <strong>semi-permeable membrane</strong> from a region of <strong>high water concentration</strong> (more dilute) to a region of <strong>low water concentration</strong> (more concentrated).</p>
+          <div class="support-visual-grid">
+            ${figure(media.osmosisStart,'BBC Bitesize diagram showing solutions of different concentrations separated by a membrane','Starting concentrations','BBC Bitesize GCSE Science')}
+            ${figure(media.osmosisMove,'BBC Bitesize diagram showing movement of water across a membrane','Net movement of water','BBC Bitesize GCSE Science')}
+          </div>
+          <div class="concept-grid">
+            <div class="concept"><strong>Hypotonic</strong><p>The surrounding solution is more dilute than the cell: water tends to move into the cell.</p></div>
+            <div class="concept"><strong>Isotonic</strong><p>Water concentration is balanced: no net change in cell size.</p></div>
+            <div class="concept"><strong>Hypertonic</strong><p>The surrounding solution is more concentrated than the cell: water tends to move out of the cell.</p></div>
+          </div>
+          <div class="mistake"><strong>Common misconception:</strong> Osmosis is <strong>water only</strong>. Do not describe glucose, salt or other solute particles as moving “by osmosis”.</div>
+          <div class="mistake"><strong>Common misconception:</strong> Water moves towards the side with <strong>lower water concentration</strong>, which is the side with more dissolved solute.</div>
+          ${video('vCJVXYmXkzM','Osmosis','Cognito','Focus on water concentration, the partially permeable membrane and predicting movement into or out of cells.')}
+          ${sourceBox(bbc.osmosis)}
+        `},
+        {title:'Cells in different solutions', body:()=>`
+          <div class="support-visual-grid">
+            ${figure(media.osmosisCells,'BBC Bitesize diagram showing cell responses to different solution concentrations','Cells and osmosis','BBC Bitesize GCSE Science')}
+          </div>
+          <p>Osmosis changes the amount of water inside cells. In plant tissues, water entering cells increases <strong>turgor</strong>; water leaving cells causes the cells to become less turgid and the tissue may wilt.</p>
+          <div class="worked"><strong>Everyday example: food preservation</strong><p>Very salty or sugary surroundings can draw water out of microorganisms by osmosis. This is one reason high-salt or high-sugar foods can slow microbial growth.</p></div>
