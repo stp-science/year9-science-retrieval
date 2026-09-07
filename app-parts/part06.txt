@@ -1,0 +1,75 @@
+    if(activeView==='learn') renderLearn();
+    else if(activeView==='check') renderCheck();
+    else if(activeView==='exam') renderExamList();
+    else if(activeView==='games') renderGames();
+    else if(activeView==='assessment') renderAssessmentPrep();
+    window.scrollTo({top:Math.max(0,document.querySelector('.mode-tabs').offsetTop-90),behavior:'smooth'});
+  }
+
+  function renderLearn(){
+    const m=modules[activeModule];
+    panel.style.setProperty('--accent',m.colour);
+    activeLesson=Math.min(activeLesson,m.lessons.length-1);
+    panel.innerHTML=`
+      <p class="section-kicker">Section ${m.number}</p><h2>${m.name}</h2><p class="lead">${m.intro}</p>
+      <div class="vocab-strip">${m.vocab.map(v=>`<span>${v}</span>`).join('')}</div>
+      <div class="lesson-nav">${m.lessons.map((l,i)=>`<button class="lesson-chip ${i===activeLesson?'active':''}" data-lesson="${i}" type="button">${i+1}. ${l.title}</button>`).join('')}</div>
+      <article class="lesson-body">${m.lessons[activeLesson].body()}</article>`;
+    panel.querySelectorAll('[data-lesson]').forEach(btn=>btn.addEventListener('click',()=>{activeLesson=Number(btn.dataset.lesson);renderLearn();}));
+  }
+
+  function renderCheck(){
+    const m=modules[activeModule], qs=questions[activeModule];
+    panel.style.setProperty('--accent',m.colour);
+    const score=qs.filter((_,i)=>state.correct?.[`${activeModule}-${i}`]).length;
+    panel.innerHTML=`
+      <div class="quiz-head"><div><p class="section-kicker">Quick Check • ${m.name}</p><h2>Answer from memory</h2><p class="lead">Try every question before going back to the notes. Correct answers are saved on this device.</p></div><div class="score-pill">Mastered ${score}/${qs.length}</div></div>
+      ${qs.map((q,i)=>renderQuestion(q,i)).join('')}
+      <button class="reset-btn" id="reset-section" type="button">Reset this section</button>`;
+    panel.querySelectorAll('.option').forEach(btn=>btn.addEventListener('click',handleAnswer));
+    document.getElementById('reset-section').addEventListener('click',()=>{
+      qs.forEach((_,i)=>delete state.correct[`${activeModule}-${i}`]); saveState();renderChrome();renderCheck();
+    });
+  }
+  function renderQuestion(q,i){
+    const key=`${activeModule}-${i}`; const done=!!state.correct?.[key];
+    return `<div class="question-card" data-qindex="${i}"><div class="question-num">Question ${i+1} of ${questions[activeModule].length}</div><h3>${q.q}</h3><div class="options">${q.options.map((o,j)=>`<button class="option ${done&&j===q.a?'correct':''}" data-answer="${j}" ${done?'disabled':''} type="button">${String.fromCharCode(65+j)}. ${o}</button>`).join('')}</div>${done?`<div class="feedback good"><strong>Correct.</strong> ${q.explain}</div>`:''}</div>`;
+  }
+  function handleAnswer(e){
+    const card=e.currentTarget.closest('.question-card'); const i=Number(card.dataset.qindex); const q=questions[activeModule][i]; const selected=Number(e.currentTarget.dataset.answer); const key=`${activeModule}-${i}`;
+    card.querySelectorAll('.option').forEach((b,j)=>{b.disabled=true;if(j===q.a)b.classList.add('correct');if(j===selected&&j!==q.a)b.classList.add('wrong');});
+    const fb=document.createElement('div');
+    if(selected===q.a){
+      if(!state.correct[key]) addXP(10); state.correct[key]=true; saveState();
+      fb.className='feedback good';fb.innerHTML=`<strong>Correct.</strong> ${q.explain}`;
+    }else{
+      fb.className='feedback bad';fb.innerHTML=`<strong>Not yet.</strong> ${q.explain}<br><span>You can retry this question by reopening Quick Check.</span>`;
+      setTimeout(()=>{card.querySelectorAll('.option').forEach(b=>{b.disabled=false;b.classList.remove('correct','wrong')});fb.remove();},1800);
+    }
+    card.appendChild(fb); renderChrome();
+  }
+
+  function renderExamList(){
+    panel.style.setProperty('--accent','#d29a22');
+    panel.innerHTML=`<p class="section-kicker">Extended Writing</p><h2>Practise connected explanations</h2><p class="lead">These questions deliberately combine ideas across the topic. Plan the science first, then write in linked sentences using cause-and-effect language.</p>
+      <div class="assessment-box"><strong>How the checker works</strong><p>It looks for key scientific ideas, not exact wording. Treat the score as a revision prompt rather than an official mark. Read the model answer afterwards and improve your own explanation.</p></div>
+      <div class="exam-grid">${writingPrompts.map(p=>`<article class="exam-card"><span class="marks">Extended response • ${p.marks} key ideas</span><h3>${p.title}</h3><p>${p.q}</p><button class="primary-btn" data-prompt="${p.id}" type="button">Practise this question</button></article>`).join('')}</div>`;
+    panel.querySelectorAll('[data-prompt]').forEach(btn=>btn.addEventListener('click',()=>renderWritingPrompt(btn.dataset.prompt)));
+  }
+  function renderWritingPrompt(id){
+    const p=writingPrompts.find(x=>x.id===id);
+    panel.innerHTML=`<button class="secondary-btn" id="back-exam" type="button">← Back to questions</button><p class="section-kicker" style="margin-top:18px">Extended Writing</p><h2>${p.title}</h2><p class="lead"><strong>${p.q}</strong></p>
+      <h3>Plan before you write</h3><div class="planner">${p.plan.map((x,i)=>`<div class="planner-item"><strong>${i+1}.</strong> ${x}</div>`).join('')}</div>
+      <textarea class="writing-area" id="writing-area" placeholder="Write your explanation here. Use precise scientific vocabulary and link each statement to why it matters..."></textarea>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="primary-btn" id="check-writing" type="button">Check key ideas</button><button class="secondary-btn" id="clear-writing" type="button">Clear</button></div>
+      <div id="writing-feedback"></div>`;
+    document.getElementById('back-exam').addEventListener('click',renderExamList);
+    document.getElementById('clear-writing').addEventListener('click',()=>{document.getElementById('writing-area').value='';document.getElementById('writing-feedback').innerHTML='';});
+    document.getElementById('check-writing').addEventListener('click',()=>checkWriting(p));
+  }
+  function checkWriting(p){
+    const text=document.getElementById('writing-area').value.toLowerCase().trim();
+    const target=document.getElementById('writing-feedback');
+    if(text.length<40){target.innerHTML='<div class="feedback bad"><strong>Add more detail first.</strong> Aim for a connected paragraph rather than a list of isolated words.</div>';return;}
+    const results=p.concepts.map(([label,terms])=>({label,hit:terms.some(t=>text.includes(t))}));
+    const score=results.filter(r=>r.hit).length;
