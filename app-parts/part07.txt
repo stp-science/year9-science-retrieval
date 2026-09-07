@@ -1,12 +1,12 @@
   function renderGames(){
     panel.style.setProperty('--accent','#6f55bd');
-    panel.innerHTML=`<p class="section-kicker">Revision Arcade</p><h2>Unlock games by mastering practice questions</h2><p class="lead">Reach at least 80% on the multiple-choice practice in the two linked sections to unlock each game. The science still comes first.</p>
+    panel.innerHTML=`<p class="section-kicker">Revision Arcade</p><h2>Unlock games by mastering practice questions</h2><p class="lead">To unlock a game, students must complete <strong>all</strong> multiple-choice and written questions correctly in both linked sections. Each linked section must reach 100% mastery.</p>
       <div class="arcade-grid">${unlocks.map((g,i)=>gameCard(g,i)).join('')}</div><div id="game-host"></div>`;
     panel.querySelectorAll('[data-game]').forEach(btn=>btn.addEventListener('click',()=>launchGame(btn.dataset.game)));
   }
   function gameCard(g,i){
     const unlocked=isUnlocked(g); const icons=['🩸','♥','⚡']; const desc=['Sort transport statements to the correct blood component.','Build the correct route through the heart and circulation.','Classify transport examples as diffusion, osmosis or active transport.'];
-    return `<article class="game-card ${unlocked?'':'locked'}"><div class="game-icon">${icons[i]}</div><div class="unlock-tag">${unlocked?'Unlocked':'Locked'}</div><h3>${g.name}</h3><p>${desc[i]}</p><p><strong>Needs:</strong> ${g.req.map(k=>`${modules[k].short} ${mastery(k)}%`).join(' + ')}</p><button class="primary-btn" data-game="${g.id}" ${unlocked?'':'disabled'} type="button">${unlocked?'Play':'Keep revising'}</button></article>`;
+    return `<article class="game-card ${unlocked?'':'locked'}"><div class="game-icon">${icons[i]}</div><div class="unlock-tag">${unlocked?'Unlocked':'Locked'}</div><h3>${g.name}</h3><p>${desc[i]}</p><p><strong>Requires:</strong> 100% in ${g.req.map(k=>modules[k].short).join(' + ')}</p><p><strong>Current:</strong> ${g.req.map(k=>`${modules[k].short} ${mastery(k)}%`).join(' • ')}</p><button class="primary-btn" data-game="${g.id}" ${unlocked?'':'disabled'} type="button">${unlocked?'Play':'Complete all questions correctly'}</button></article>`;
   }
   function launchGame(id){ if(id==='bloodblitz') gameBlood(); else if(id==='routerush') gameRoute(); else gameGradient(); }
 
