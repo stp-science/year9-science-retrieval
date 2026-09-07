@@ -1,0 +1,75 @@
+    if(!state.writing) state.writing={};
+    if((state.writing[p.id]||0)<score){ addXP((score-(state.writing[p.id]||0))*3); state.writing[p.id]=score; saveState(); }
+    const level=score>=7?'Strong coverage':score>=5?'Good start — add the missing links':'More science needed';
+    target.innerHTML=`<div class="feedback ${score>=5?'good':'bad'}"><strong>${level}: ${score}/${p.concepts.length} key ideas detected.</strong> Improve any missing ideas, then compare with the model.</div>
+      <div class="concept-results">${results.map(r=>`<div class="concept-hit ${r.hit?'yes':''}">${r.hit?'✓':'○'} ${r.label}</div>`).join('')}</div>
+      <details class="model-answer"><summary>Show model answer</summary><p>${p.model}</p><p><strong>Improve yours:</strong> do not copy the model. Close it, then rewrite your explanation from memory using the missing ideas.</p></details>`;
+  }
+
+  function renderAssessmentPrep(){
+    panel.style.setProperty('--accent','#d29a22');
+    panel.innerHTML=`<p class="section-kicker">Assessment Prep</p><h2>Build explanations, not fact lists</h2><p class="lead">The strongest extended writing joins ideas across the transport system. Use this page as a final checklist before attempting the practice questions.</p>
+      <div class="assessment-overview">
+        <div class="concept"><strong>1. Name the mechanism</strong><p>Use exact terms: diffusion, osmosis, active transport, pumping, concentration gradient.</p></div>
+        <div class="concept"><strong>2. Give the direction</strong><p>State where a substance moves from and to. For diffusion, say high → low concentration.</p></div>
+        <div class="concept"><strong>3. Link structure to function</strong><p>Do not just name a feature. Explain why thin walls, valves, elastic walls or large surface area help.</p></div>
+        <div class="concept"><strong>4. Connect body systems</strong><p>Link lungs and small intestine to blood, the heart to circulation and capillaries to exchange.</p></div>
+        <div class="concept"><strong>5. Use cause → effect</strong><p>“Because… therefore… so…” forces you to explain rather than describe.</p></div>
+        <div class="concept"><strong>6. Check misconceptions</strong><p>Water only for osmosis; particles still move at equilibrium; arteries are defined by direction, not oxygen content.</p></div>
+      </div>
+      <h3>High-value sentence patterns</h3>
+      <div class="sentence-frame"><strong>Structure → function:</strong> “Capillaries have ___, which means ___, so ___.”</div>
+      <div class="sentence-frame"><strong>Gradient:</strong> “The concentration of ___ is higher in ___ than ___, so ___ diffuses from ___ to ___.”</div>
+      <div class="sentence-frame"><strong>Exercise:</strong> “During exercise, ___ increases because ___. Therefore the heart ___ so that ___.”</div>
+      <div class="sentence-frame"><strong>Practical conclusion:</strong> “As ___ increased, ___ changed from ___ to ___. This suggests ___ because ___.”</div>
+      <h3>Final knowledge checklist</h3>
+      <table class="mini-table"><tbody>
+        <tr><th>Blood</th><td>plasma, red cells + haemoglobin, white cells, platelets; oxygen, nutrients, hormones and wastes</td></tr>
+        <tr><th>Heart & vessels</th><td>four chambers, valves, septum, major vessels, double circulation; artery/vein/capillary adaptations</td></tr>
+        <tr><th>Heart rate practical</th><td>respiration link; IV/DV/controls; repeats, mean, graph, conclusion and evaluation</td></tr>
+        <tr><th>Diffusion</th><td>high → low; concentration gradient; equilibrium; thin/large exchange surfaces; high SA:V</td></tr>
+        <tr><th>Osmosis</th><td>water only; semi-permeable membrane; water concentration; hypo/iso/hypertonic; practical evidence</td></tr>
+        <tr><th>Active transport</th><td>low → high; against gradient; energy + transport proteins; glucose uptake example</td></tr>
+      </tbody></table>
+      <button class="primary-btn" id="go-writing" type="button">Go to extended-writing practice</button>`;
+    document.getElementById('go-writing').addEventListener('click',()=>{activeView='exam';setActiveTab('exam');renderChrome();renderExamList();});
+  }
+
+  function renderGames(){
+    panel.style.setProperty('--accent','#6f55bd');
+    panel.innerHTML=`<p class="section-kicker">Revision Arcade</p><h2>Unlock games by mastering Quick Checks</h2><p class="lead">Reach at least 80% in the two linked sections to unlock each game. The science still comes first.</p>
+      <div class="arcade-grid">${unlocks.map((g,i)=>gameCard(g,i)).join('')}</div><div id="game-host"></div>`;
+    panel.querySelectorAll('[data-game]').forEach(btn=>btn.addEventListener('click',()=>launchGame(btn.dataset.game)));
+  }
+  function gameCard(g,i){
+    const unlocked=isUnlocked(g); const icons=['🩸','♥','⚡']; const desc=['Sort transport statements to the correct blood component.','Build the correct route through the heart and circulation.','Classify transport examples as diffusion, osmosis or active transport.'];
+    return `<article class="game-card ${unlocked?'':'locked'}"><div class="game-icon">${icons[i]}</div><div class="unlock-tag">${unlocked?'Unlocked':'Locked'}</div><h3>${g.name}</h3><p>${desc[i]}</p><p><strong>Needs:</strong> ${g.req.map(k=>`${modules[k].short} ${mastery(k)}%`).join(' + ')}</p><button class="primary-btn" data-game="${g.id}" ${unlocked?'':'disabled'} type="button">${unlocked?'Play':'Keep revising'}</button></article>`;
+  }
+  function launchGame(id){ if(id==='bloodblitz') gameBlood(); else if(id==='routerush') gameRoute(); else gameGradient(); }
+
+  const bloodGame = [
+    ['Carries oxygen using haemoglobin','Red blood cells'],['Transports dissolved glucose','Plasma'],['Helps blood clot','Platelets'],['Helps defend against pathogens','White blood cells'],['Carries urea dissolved in the blood','Plasma'],['Contains haemoglobin','Red blood cells'],['Reduces blood loss after a cut','Platelets'],['Part of the immune response','White blood cells']
+  ];
+  function gameBlood(){
+    const host=document.getElementById('game-host'); let order=[...bloodGame].sort(()=>Math.random()-.5), idx=0,score=0;
+    const draw=()=>{ if(idx>=order.length){host.innerHTML=`<div class="game-stage"><h3>Blood Blitz complete</h3><p class="game-score">Score ${score}/${order.length}</p><button class="secondary-btn" id="replay-game">Play again</button></div>`;document.getElementById('replay-game').onclick=gameBlood;if(score>=6)addXP(15);return;}
+      const [statement,answer]=order[idx];host.innerHTML=`<div class="game-stage"><h3>Blood Blitz</h3><p class="game-score">Score ${score} • Round ${idx+1}/${order.length}</p><p>${statement}</p><div class="game-buttons">${['Plasma','Red blood cells','White blood cells','Platelets'].map(x=>`<button data-pick="${x}">${x}</button>`).join('')}</div><div id="game-feedback"></div></div>`;
+      host.querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{const ok=b.dataset.pick===answer;document.getElementById('game-feedback').innerHTML=`<p>${ok?'✓ Correct':'✗ '+answer}</p>`;if(ok)score++;idx++;setTimeout(draw,550);});}; draw();
+  }
+  const routeSteps=['Vena cava','Right atrium','Right ventricle','Pulmonary artery','Lungs','Pulmonary vein','Left atrium','Left ventricle','Aorta','Body'];
+  function gameRoute(){
+    const host=document.getElementById('game-host');let idx=0,errors=0;
+    const draw=()=>{if(idx>=routeSteps.length){host.innerHTML=`<div class="game-stage"><h3>Route Rush complete</h3><p class="game-score">Route built with ${errors} error${errors===1?'':'s'}.</p><button class="secondary-btn" id="replay-game">Play again</button></div>`;document.getElementById('replay-game').onclick=gameRoute;if(errors<=2)addXP(15);return;}
+      const correct=routeSteps[idx];const distractors=routeSteps.filter(x=>x!==correct).sort(()=>Math.random()-.5).slice(0,3);const opts=[correct,...distractors].sort(()=>Math.random()-.5);
+      host.innerHTML=`<div class="game-stage"><h3>Route Rush</h3><p>Blood has reached: <strong>${idx===0?'Body tissues':routeSteps[idx-1]}</strong>. Where does it go next?</p><div class="route-progress">${routeSteps.map((s,i)=>`<span class="${i<idx?'done':''}">${i<idx?s:'?'}</span>`).join('')}</div><div class="route-options">${opts.map(o=>`<button data-route="${o}">${o}</button>`).join('')}</div><div id="game-feedback"></div></div>`;
+      host.querySelectorAll('[data-route]').forEach(b=>b.onclick=()=>{if(b.dataset.route===correct){idx++;draw();}else{errors++;document.getElementById('game-feedback').innerHTML='<p>Not that route — use the chamber/vessel sequence.</p>';}});};draw();
+  }
+  const gradientGame=[
+    ['Oxygen moves from alveoli into blood down a concentration gradient','Diffusion'],['Water enters a cell across a semi-permeable membrane','Osmosis'],['Glucose moves from a lower concentration in the gut to a higher concentration in blood using energy','Active transport'],['Carbon dioxide moves from blood into alveoli down its gradient','Diffusion'],['Water leaves a cell placed in a concentrated salt solution','Osmosis'],['A cell uses energy to move ions against their gradient','Active transport'],['Net movement is from high to low concentration','Diffusion'],['Only water is being described','Osmosis']
+  ];
+  function gameGradient(){
+    const host=document.getElementById('game-host');let order=[...gradientGame].sort(()=>Math.random()-.5),idx=0,score=0;
+    const draw=()=>{if(idx>=order.length){host.innerHTML=`<div class="game-stage"><h3>Gradient Grid complete</h3><p class="game-score">Score ${score}/${order.length}</p><button class="secondary-btn" id="replay-game">Play again</button></div>`;document.getElementById('replay-game').onclick=gameGradient;if(score>=6)addXP(15);return;}
+      const [statement,answer]=order[idx];host.innerHTML=`<div class="game-stage"><h3>Gradient Grid</h3><p class="game-score">Score ${score} • Round ${idx+1}/${order.length}</p><p>${statement}</p><div class="game-buttons">${['Diffusion','Osmosis','Active transport'].map(x=>`<button data-process="${x}">${x}</button>`).join('')}</div></div>`;
+      host.querySelectorAll('[data-process]').forEach(b=>b.onclick=()=>{if(b.dataset.process===answer)score++;idx++;draw();});};draw();
+  }
