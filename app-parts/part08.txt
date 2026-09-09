@@ -21,6 +21,21 @@
   `;
   document.head.appendChild(zoomStyle);
 
+  const studyStyle=document.createElement('style');
+  studyStyle.id='revision-technique-styles';
+  studyStyle.textContent=`
+    .study-technique-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}
+    .study-technique-card{border:1px solid var(--line);border-radius:16px;padding:18px;background:color-mix(in srgb,var(--paper) 94%,var(--sky));display:flex;flex-direction:column;gap:8px}
+    .study-technique-card h3{margin:0;font-size:1.16rem}.study-technique-card p{margin:0}.study-technique-card ol{margin:4px 0 2px;padding-left:21px}.study-technique-card li{margin:5px 0}
+    .study-technique-top{display:flex;align-items:center;gap:10px}.study-technique-icon{font-size:1.7rem}.study-priority{margin-left:auto;border-radius:999px;background:var(--sky);padding:4px 8px;font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.06em}
+    .study-best{font-size:.82rem;color:var(--muted)}.study-example{padding:10px 11px;border-radius:10px;background:var(--sky);font-size:.86rem}
+    .study-video-link{display:inline-block;align-self:flex-start;margin-top:auto;text-decoration:none;background:var(--navy);color:#fff!important;border-radius:10px;padding:8px 12px;font-weight:800;font-size:.84rem}
+    .study-video-link:hover{filter:brightness(1.12)}.study-session{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:10px}.study-session div{border:1px solid var(--line);border-radius:12px;padding:11px;background:var(--paper)}.study-session strong{display:block;color:var(--accent,#2d6fb5)}
+    @media(max-width:850px){.study-technique-grid{grid-template-columns:1fr}.study-session{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:520px){.study-session{grid-template-columns:1fr}}
+  `;
+  document.head.appendChild(studyStyle);
+
   const zoomOverlay=document.createElement('div');
   zoomOverlay.className='image-zoom-overlay';
   zoomOverlay.setAttribute('role','dialog');
@@ -81,6 +96,73 @@
   zoomOverlay.addEventListener('click',e=>{if(e.target===zoomOverlay) closeZoom();});
   document.addEventListener('keydown',e=>{if(e.key==='Escape' && zoomOverlay.classList.contains('open')) closeZoom();});
   new MutationObserver(prepareZoomImages).observe(panel,{childList:true,subtree:true});
+
+  const studyTechniques=[
+    {
+      icon:'🧠',title:'Retrieval practice',priority:'Start here',bestFor:'Remembering key facts, processes, definitions and explanations.',
+      steps:['Choose a small topic.','Close your notes and put the answer away.','Write, say or sketch everything you can remember.','Check against your notes or the model answer.','Correct mistakes, then try again later without looking.'],
+      example:'Transport example: draw the route of blood through the heart from memory, or answer the Practice Questions without opening the Learn section.',
+      video:'https://www.youtube.com/watch?v=jfREWvtd_DM'
+    },
+    {
+      icon:'📅',title:'Spaced practice',priority:'Start here',bestFor:'Keeping knowledge for weeks and months instead of cramming it for one test.',
+      steps:['Split revision into short sessions across several days.','Leave a gap before revisiting the same material.','Retrieve the information each time rather than simply rereading it.','Return sooner to anything you forgot and leave longer gaps for material you know well.'],
+      example:'Try: Day 1 learn it → Day 2 retrieve it → Day 4 retrieve it again → Day 7 test it again.',
+      video:'https://www.youtube.com/watch?v=yfNO8LL0PMQ'
+    },
+    {
+      icon:'🔀',title:'Interleaving',priority:'Mix it up',bestFor:'Learning to tell similar ideas apart and deciding which scientific idea applies.',
+      steps:['First make sure you understand each idea separately.','Mix two or three related topics in the same revision session.','Change the order of questions so you must decide which idea to use.','Compare similarities and differences as you switch.'],
+      example:'Transport example: mix diffusion, osmosis and active transport questions instead of doing a whole page of only one process.',
+      video:'https://www.youtube.com/watch?v=fIv_5-ODuow'
+    },
+    {
+      icon:'✏️',title:'Dual coding',priority:'Words + visuals',bestFor:'Processes, structures, routes and relationships that can be shown in a diagram.',
+      steps:['Read or recall the scientific explanation.','Turn the key ideas into a simple diagram, flow chart or labelled sketch.','Use only labels and arrows that add meaning.','Hide the words and explain the diagram aloud from memory.','Check and correct your diagram.'],
+      example:'Transport example: sketch the heart, an alveolus or a concentration gradient and explain what each arrow means.',
+      video:'https://www.youtube.com/watch?v=91SqSp2Ljqc'
+    },
+    {
+      icon:'❓',title:'Elaboration',priority:'Ask how & why',bestFor:'Building deeper understanding and improving explanation questions.',
+      steps:['Take one fact or idea you need to know.','Ask yourself: How does this work? Why does this happen?','Answer in your own words without copying.','Connect the idea to something else you have learned.','Check that the connection is scientifically correct.'],
+      example:'Transport example: Why are capillaries one cell thick? Why does heart rate increase during exercise? How does this link to respiration?',
+      video:'https://www.youtube.com/watch?v=gQRzW24KrDc'
+    }
+  ];
+
+  function studyTechniqueCard(t){
+    return `<article class="study-technique-card">
+      <div class="study-technique-top"><span class="study-technique-icon" aria-hidden="true">${t.icon}</span><h3>${t.title}</h3><span class="study-priority">${t.priority}</span></div>
+      <p class="study-best"><strong>Best for:</strong> ${t.bestFor}</p>
+      <ol>${t.steps.map(step=>`<li>${step}</li>`).join('')}</ol>
+      <div class="study-example"><strong>Try it in Science:</strong> ${t.example}</div>
+      <a class="study-video-link" href="${t.video}" target="_blank" rel="noopener">▶ Watch how to use this technique</a>
+    </article>`;
+  }
+
+  function renderStudy(){
+    panel.style.setProperty('--accent','#2d6fb5');
+    panel.innerHTML=`
+      <p class="section-kicker">Revision Techniques</p>
+      <h2>Revise in ways that make your brain do the work</h2>
+      <p class="lead">Good revision is active. The aim is not to spend the longest time looking at notes; it is to practise recalling, explaining and applying what you have learned.</p>
+      <div class="exam-tip"><strong>Best place to start</strong><p>Use <strong>retrieval practice</strong> every time you revise and spread that practice across several days. These are the two techniques with the strongest broad evidence for improving long-term learning.</p></div>
+      <div class="study-technique-grid">${studyTechniques.map(studyTechniqueCard).join('')}</div>
+      <div class="worked"><strong>A simple 25-minute revision session</strong>
+        <div class="study-session">
+          <div><strong>5 min</strong>Recall an older topic without notes.</div>
+          <div><strong>10 min</strong>Answer practice questions closed-book.</div>
+          <div><strong>5 min</strong>Draw or explain one key process.</div>
+          <div><strong>5 min</strong>Check, correct and decide when to revisit it.</div>
+        </div>
+      </div>
+      <div class="mistake"><strong>Do not make rereading or highlighting your main revision method.</strong><p>They can help you get started, but they often create a feeling of familiarity without checking whether you can actually recall the science. Close the notes and test yourself.</p></div>
+      <div class="source-box"><strong>Want to learn more?</strong><p>These strategies are based on evidence-informed study guidance from The Learning Scientists. Their student resources explain retrieval practice, spacing, interleaving, elaboration and dual coding.</p><a href="https://www.learningscientists.org/videos" target="_blank" rel="noopener">Open The Learning Scientists video collection</a></div>
+      <button class="primary-btn" id="study-practice-now" type="button">Practise retrieval on this website</button>`;
+    document.getElementById('study-practice-now')?.addEventListener('click',()=>{activeView='check';setActiveTab('check');renderChrome();render();});
+  }
+
+  document.querySelector('[data-view="study"]')?.addEventListener('click',()=>renderStudy());
 
   render();
   prepareZoomImages();
